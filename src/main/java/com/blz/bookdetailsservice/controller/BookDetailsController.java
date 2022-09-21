@@ -118,17 +118,32 @@ public class BookDetailsController {
 		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
 	}
 	
+	/*
+     *@Purpose : Api for validate bookId  
+     *@Param : bookId
+     */
+	
 	@GetMapping("/validatebookId/{bookId}")
 	public BookResponse validateBookId(@PathVariable Long bookId) {
 		BookResponse book =bookDetailsService.validateBookId(bookId);
 		return new BookResponse(200, "user found", book);
 	}
 	
+	/*
+     *@Purpose : Api for increase quantity of books
+     *@Param : bookId, bookQuantity
+     */
+	
 	@GetMapping("/updatebookquantity/{bookId}/{bookQuantity}")
 	public BookResponse updateBookQuantity(@PathVariable Long bookId, @PathVariable Integer bookQuantity) {
 		BookResponse book =bookDetailsService.updateBookQuantity(bookId,bookQuantity);
 		return new BookResponse(200, "user found", book);
 	}
+	
+	/*
+     *@Purpose : Api for decrease quantity of books
+     *@Param : bookId, bookQuantity
+     */
 	
 	@GetMapping("/updatequantity/{bookId}/{bookQuantity}")
 	public BookResponse updateQuantity(@PathVariable Long bookId, @PathVariable Integer bookQuantity) {

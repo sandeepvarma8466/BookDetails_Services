@@ -36,7 +36,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel addBook(BookDetailsDTO bookDTO, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			BookDetailsModel bookModel = new BookDetailsModel(bookDTO);
 			bookDetailsRepository.save(bookModel);
@@ -51,7 +51,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel updateBook(Long bookId, BookDetailsDTO bookDTO, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<BookDetailsModel> isBookPresent = bookDetailsRepository.findById(bookId);
 			if (isBookPresent.isPresent()) {
@@ -72,7 +72,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public List<BookDetailsModel> fetchAllBooks(String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			List<BookDetailsModel> checkBooksPresent = bookDetailsRepository.findAll();
 			if (checkBooksPresent.size()>0) {
@@ -89,7 +89,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel getBook(Long bookId, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<BookDetailsModel> isBooksPresent = bookDetailsRepository.findById(bookId);
 			if (isBooksPresent.isPresent()) {
@@ -106,7 +106,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel deletebook(Long bookId, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<BookDetailsModel> isBooksPresent = bookDetailsRepository.findById(bookId);
 			if (isBooksPresent.isPresent()) {
@@ -123,7 +123,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel changeQuantity(Long bookId, Integer bookQuantity, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<BookDetailsModel> isBooksPresent = bookDetailsRepository.findById(bookId);
 			if (isBooksPresent.isPresent()) {
@@ -142,7 +142,7 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookDetailsModel updatePrice(Long bookId, Integer bookPrice, String token) {
-		boolean isUserPresent = restTemplate.getForObject("http://bookstore-user-service:8049/bookstoreuser/verify/" + token, Boolean.class);
+		boolean isUserPresent = restTemplate.getForObject("http://BOOKSTORE-USER-SERVICE:8049/bookstoreuser/verify/" + token, Boolean.class);
 		if (isUserPresent) {
 			Optional<BookDetailsModel> isBooksPresent = bookDetailsRepository.findById(bookId);
 			if (isBooksPresent.isPresent()) {
@@ -154,6 +154,10 @@ public class BookDetailsService implements IBookDetailsService{
 		}
 		throw new BookDetailsNotFoundException(500, "User Not Found");
 	}
+	
+	/**
+	 *  Purpose:SERVICE FOR validate book
+	 */
 
 	@Override
 	public BookResponse validateBookId(Long bookId) {
@@ -163,6 +167,10 @@ public class BookDetailsService implements IBookDetailsService{
 		}
 		throw new BookDetailsNotFoundException(500, "User Not Found");
 	}
+	
+	/**
+	 *  Purpose:SERVICE FOR increase quantity of book
+	 */
 
 	@Override
 	public BookResponse updateBookQuantity(Long bookId, Integer bookQuantity) {
@@ -174,6 +182,10 @@ public class BookDetailsService implements IBookDetailsService{
 		}
 		throw new BookDetailsNotFoundException(500, "Book Not Found");
 	}
+	
+	/**
+	 *  Purpose:SERVICE FOR decrease quantity of book
+	 */
 
 	@Override
 	public BookResponse updateQuantity(Long bookId, Integer bookQuantity) {
