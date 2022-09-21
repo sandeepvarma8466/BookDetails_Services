@@ -1,12 +1,10 @@
 package com.blz.bookdetailsservice.service;
 
-import java.io.IOException;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.blz.bookdetailsservice.dto.BookDetailsDTO;
 import com.blz.bookdetailsservice.model.BookDetailsModel;
+import com.blz.bookdetailsservice.util.BookResponse;
 
 public interface IBookDetailsService {
 
@@ -23,4 +21,10 @@ public interface IBookDetailsService {
 	BookDetailsModel changeQuantity(Long bookId, Integer bookQuantity, String token);
 
 	BookDetailsModel updatePrice(Long bookId, Integer bookPrice, String token);
+
+	BookResponse validateBookId(Long bookId);
+
+	BookResponse updateBookQuantity(Long bookId, Integer bookQuantity);
+
+	BookResponse updateQuantity(Long bookId, Integer bookQuantity);
 }
