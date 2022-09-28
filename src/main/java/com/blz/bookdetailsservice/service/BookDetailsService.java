@@ -161,9 +161,9 @@ public class BookDetailsService implements IBookDetailsService{
 
 	@Override
 	public BookResponse validateBookId(Long bookId) {
-		Optional<BookDetailsModel> isUserPresent = bookDetailsRepository.findById(bookId);
-		if (isUserPresent.isPresent()) {
-			return new BookResponse(200,"User Validate Successfully",isUserPresent.get());
+		Optional<BookDetailsModel> isBookPresent = bookDetailsRepository.findById(bookId);
+		if (isBookPresent.isPresent()) {
+			return new BookResponse(200,"User Validate Successfully",isBookPresent.get());
 		}
 		throw new BookDetailsNotFoundException(500, "User Not Found");
 	}
@@ -178,7 +178,7 @@ public class BookDetailsService implements IBookDetailsService{
 		if (isBooksPresent.isPresent()) {
 			isBooksPresent.get().setBookQuantity(isBooksPresent.get().getBookQuantity() - bookQuantity);
 			bookDetailsRepository.save(isBooksPresent.get());
-			return new BookResponse(200,"User Validate Successfully",isBooksPresent.get());
+			return new BookResponse(200,"User Update Successfully",isBooksPresent.get());
 		}
 		throw new BookDetailsNotFoundException(500, "Book Not Found");
 	}
@@ -193,8 +193,30 @@ public class BookDetailsService implements IBookDetailsService{
 		if (isBooksPresent.isPresent()) {
 			isBooksPresent.get().setBookQuantity(isBooksPresent.get().getBookQuantity() + bookQuantity);
 			bookDetailsRepository.save(isBooksPresent.get());
-			return new BookResponse(200,"User Validate Successfully",isBooksPresent.get());
+			return new BookResponse(200,"User Update Successfully",isBooksPresent.get());
 		}
 		throw new BookDetailsNotFoundException(500, "Book Not Found");
+	}
+
+	@Override
+	public List<BookDetailsModel> searchBookByName(String bookName) {
+		List<BookDetailsModel> isBookPresent = bookDetailsRepository.searchBookByName(bookName);
+		if (isBookPresent.isEmpty()) {
+			throw new BookDetailsNotFoundException(500, "Book Name Not Found");
+		}
+		else {
+			return isBookPresent;
+		}
+	}
+
+	@Override
+	public List<BookDetailsModel> searchBookByAuthor(String bookAuthor) {
+		List<BookDetailsModel> isBookPresent = bookDetailsRepository.searchBookByAuthor(bookAuthor);
+		if (isBookPresent.isEmpty()) {
+			throw new BookDetailsNotFoundException(500, "Author Name Not Found");
+		}
+		else {
+			return isBookPresent;
+		}
 	}
 }

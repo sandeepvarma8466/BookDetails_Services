@@ -80,7 +80,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	   }*/
 
     private ApiInfo apiInfo() {
-        return new ApiInfo("Fundoo",
+        return new ApiInfo("BookStoreService",
                 "APIs for E.",
                 "1.0",
                 "Terms of service",

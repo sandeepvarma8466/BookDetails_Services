@@ -2,6 +2,8 @@ package com.blz.bookdetailsservice.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,7 @@ public class BookDetailsController {
      */
 	
 	@PostMapping("/addbook")
-	public ResponseEntity<BookResponse> addBook(@RequestBody BookDetailsDTO bookDTO, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> addBook(@Valid @RequestBody BookDetailsDTO bookDTO, @RequestHeader String token) {
 		BookDetailsModel bookModel = bookDetailsService.addBook(bookDTO, token);
 		BookResponse bookResponse = new BookResponse(200, "Book Added Successfully", bookModel);
 		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
@@ -52,7 +54,7 @@ public class BookDetailsController {
      */
 	
 	@PutMapping("/updatebook/{bookId}")
-	public ResponseEntity<BookResponse> updatebook(@PathVariable Long bookId, @RequestBody BookDetailsDTO bookDTO, @RequestHeader String token) {
+	public ResponseEntity<BookResponse> updatebook(@PathVariable Long bookId,@Valid @RequestBody BookDetailsDTO bookDTO, @RequestHeader String token) {
 		BookDetailsModel bookModel = bookDetailsService.updateBook(bookId, bookDTO, token);
 		BookResponse bookResponse = new BookResponse(200, "Book Updated Successfully", bookModel);
 		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
@@ -125,8 +127,7 @@ public class BookDetailsController {
 	
 	@GetMapping("/validatebookId/{bookId}")
 	public BookResponse validateBookId(@PathVariable Long bookId) {
-		BookResponse book =bookDetailsService.validateBookId(bookId);
-		return new BookResponse(200, "user found", book);
+		return bookDetailsService.validateBookId(bookId);
 	}
 	
 	/*
@@ -151,4 +152,19 @@ public class BookDetailsController {
 		return new BookResponse(200, "user found", book);
 	}
 	
+	//search book by book name
+    @GetMapping("/searchByName/{bookName}")
+    public ResponseEntity<BookResponse> searchBookByName(@PathVariable String  bookName){
+    	List<BookDetailsModel> bookModel = bookDetailsService.searchBookByName(bookName);
+    	BookResponse bookResponse = new BookResponse(200, "Book Found !!", bookModel);
+		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
+    }
+    
+  //search book by author name
+    @GetMapping("/searchByAuthor/{bookAuthor}")
+    public ResponseEntity<BookResponse> searchBookByAuthor(@PathVariable String  bookAuthor){
+    	List<BookDetailsModel> bookModel = bookDetailsService.searchBookByAuthor(bookAuthor);
+    	BookResponse bookResponse = new BookResponse(200, "Book Found !!", bookModel);
+		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
+    }
 }

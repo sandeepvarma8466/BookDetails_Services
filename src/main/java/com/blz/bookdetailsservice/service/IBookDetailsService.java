@@ -27,4 +27,8 @@ public interface IBookDetailsService {
 	BookResponse updateBookQuantity(Long bookId, Integer bookQuantity);
 
 	BookResponse updateQuantity(Long bookId, Integer bookQuantity);
+
+	List<BookDetailsModel> searchBookByName(String bookName);
+
+	List<BookDetailsModel> searchBookByAuthor(String bookAuthor);
 }
